@@ -1,0 +1,3 @@
+./common-environment/terraform*
+./common-environment/.terraform*
+./common-environment/.terraform/*
