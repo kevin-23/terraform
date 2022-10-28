@@ -1,5 +1,4 @@
 # Creates EC2 instances
-
 resource "aws_instance" "bastion_concurso" {
   count                  = 1
   ami                    = var.instance_ami

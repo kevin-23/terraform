@@ -88,6 +88,7 @@ resource "aws_route_table_association" "private_rt_association" {
   route_table_id = aws_route_table.private_rt_concurso.id
 }
 
+# Application Load Balancer
 resource "aws_lb_target_group" "alb_concurso" {
   name     = "alb-nginx-concurso"
   port     = 80
