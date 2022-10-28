@@ -49,7 +49,7 @@ variable "instance_ami" {
 
 variable "instance_type" {
   description = "Instance types"
-  default = "t3.micro"
+  default     = "t3.micro"
 }
 
 variable "instance_name_1" {
