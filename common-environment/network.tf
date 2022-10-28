@@ -78,8 +78,9 @@ resource "aws_route_table" "private_rt_concurso" {
 }
 
 resource "aws_subnet" "private_subnet_concurso" {
-  vpc_id     = aws_vpc.vpc_concurso.id
-  cidr_block = var.private_subnet_cird
+  vpc_id            = aws_vpc.vpc_concurso.id
+  cidr_block        = var.private_subnet_cird
+  availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
     Name = var.private_subnet_name
@@ -106,16 +107,27 @@ resource "aws_lb_target_group_attachment" "tg__attachtment_concurso" {
   port             = 80
 }
 
-resource "aws_lb" "alb_" {
+resource "aws_lb" "alb_concurso" {
   name               = "alb-nginx-concurso"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.concurso_private_sg.id]
+  security_groups    = [aws_security_group.concurso_public_sg.id]
   subnets            = [for subnet in aws_subnet.public_subnet_concurso : subnet.id]
 
   enable_deletion_protection = false
 
   tags = {
     Name = "alb-nginx-concurso"
+  }
+}
+
+resource "aws_lb_listener" "alb_listener_concurso" {
+  load_balancer_arn = aws_lb.alb_concurso.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg_concurso.arn
   }
 }

@@ -53,6 +53,17 @@ resource "aws_security_group" "concurso_private_sg" {
     }
   }
 
+  dynamic "ingress" {
+    for_each = aws_subnet.public_subnet_concurso
+    content {
+      description = "Access SSH from Internet"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value.cidr_block]
+    }
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
