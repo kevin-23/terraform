@@ -87,3 +87,17 @@ resource "aws_route_table_association" "private_rt_association" {
   subnet_id      = aws_subnet.private_subnet_concurso.id
   route_table_id = aws_route_table.private_rt_concurso.id
 }
+
+resource "aws_lb_target_group" "alb_concurso" {
+  name     = "alb-nginx-concurso"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.vpc_concurso.id
+}
+
+resource "aws_lb_target_group_attachment" "tg_concurso" {
+  count            = length(aws_instance.private_nginx_concurso)
+  target_group_arn = aws_lb_target_group.alb_concurso.arn
+  target_id        = aws_instance.private_nginx_concurso[count.index].id
+  port             = 80
+}

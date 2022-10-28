@@ -18,7 +18,7 @@ resource "aws_instance" "bastion_concurso" {
 }
 
 resource "aws_instance" "private_nginx_concurso" {
-  #count                  = 1
+  count                  = 2
   ami                    = var.instance_ami
   instance_type          = var.instance_type
   key_name               = "kevinLabs"
