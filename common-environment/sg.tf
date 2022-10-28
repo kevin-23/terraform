@@ -1,4 +1,6 @@
 # Security groups
+
+# Public security groups
 resource "aws_security_group" "concurso_public_sg" {
   name        = "concurso-public-sg"
   description = "Allow SSH inbound traffic"
@@ -40,21 +42,22 @@ resource "aws_security_group" "concurso_private_sg" {
   description = "Allow SSH outbound traffic"
   vpc_id      = aws_vpc.vpc_concurso.id
 
-  ingress {
-    description      = "Access SSH from Internet"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = [var.public_subnet_cird]
-    ipv6_cidr_blocks = ["::/0"]
+  dynamic "ingress" {
+    for_each = aws_subnet.public_subnet_concurso
+    content {
+      description = "Access SSH from Internet"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value.cidr_block]
+    }
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {

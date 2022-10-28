@@ -15,11 +15,6 @@ variable "igw_name" {
 }
 
 # Public subnet variables
-variable "public_subnet_cird" {
-  description = "CIRD of the public subnet of concurso"
-  default     = "10.3.2.0/24"
-}
-
 variable "public_subnet_name" {
   description = "Name of the public subnet concurso"
   default     = "public-concurso"
@@ -54,15 +49,10 @@ variable "instance_type" {
 
 variable "instance_name_1" {
   description = "Instance name"
-  default     = "campaing-concurso"
+  default     = "bastion-concurso"
 }
 
 variable "instance_name_2" {
   description = "Instance name"
-  default     = "mongodb-concurso"
-}
-
-variable "instance_name_3" {
-  description = "Instance name"
-  default     = "bastion-concurso"
+  default     = "nginx-concurso"
 }

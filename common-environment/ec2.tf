@@ -4,10 +4,10 @@ resource "aws_instance" "bastion_concurso" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
   key_name               = "kevinLabs"
-  subnet_id              = aws_subnet.public_subnet_concurso.id
+  subnet_id              = aws_subnet.public_subnet_concurso[0].id
   vpc_security_group_ids = [aws_security_group.concurso_public_sg.id]
   tags = {
-    Name = "bastion-concurso"
+    Name = var.instance_name_1
   }
   lifecycle {
     ignore_changes = [
@@ -24,7 +24,7 @@ resource "aws_instance" "private_nginx_concurso" {
   subnet_id              = aws_subnet.private_subnet_concurso.id
   vpc_security_group_ids = [aws_security_group.concurso_private_sg.id]
   tags = {
-    Name = "private-nginx-concurso"
+    Name = "${var.instance_name_2}-${count.index + 1}"
   }
   lifecycle {
     ignore_changes = [
