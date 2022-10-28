@@ -23,6 +23,14 @@ resource "aws_instance" "private_nginx_concurso" {
   key_name               = "kevinLabs"
   subnet_id              = aws_subnet.private_subnet_concurso.id
   vpc_security_group_ids = [aws_security_group.concurso_private_sg.id]
+  user_data              = <<EOF
+  #!/bin/bash
+  sudo yum update -y
+  sudo amazon-linux-extras install nginx1 -y 
+  sudo systemctl enable nginx 
+  sudo systemctl start nginx
+  EOF
+
   tags = {
     Name = "${var.instance_name_2}-${count.index + 1}"
   }
