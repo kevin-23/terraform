@@ -2,18 +2,18 @@
 
 # VPC and its components
 resource "aws_vpc" "vpc_concurso" {
-  cidr_block       = var.vpc_cird
+  cidr_block       = "10.3.0.0/16"
   instance_tenancy = "default"
 
   tags = {
-    Name = var.vpc_name
+    Name = "vpc-concurso"
   }
 }
 
 resource "aws_internet_gateway" "igw_concurso" {
   vpc_id = aws_vpc.vpc_concurso.id
   tags = {
-    Name = var.igw_name
+    Name = "igw-concurso"
   }
 }
 
@@ -79,11 +79,11 @@ resource "aws_route_table" "private_rt_concurso" {
 
 resource "aws_subnet" "private_subnet_concurso" {
   vpc_id            = aws_vpc.vpc_concurso.id
-  cidr_block        = var.private_subnet_cird
+  cidr_block        = "10.3.3.0/24"
   availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
-    Name = var.private_subnet_name
+    Name = "private-concurso"
   }
 }
 
