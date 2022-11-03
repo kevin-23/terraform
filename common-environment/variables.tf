@@ -1,21 +1,31 @@
 # Public subnet variables
 variable "public_subnet_name" {
-  description = "Name of the public subnet concurso"
-  default     = "public-concurso"
+  description = "Name of the public subnets"
+  type        = string
+  default     = "public-subnet-tf"
 }
 
 # EC2 instance variables
 variable "instance_ami" {
   description = "Instance AMI"
-  default     = "ami-09d3b3274b6c5d4aa"
+  type        = string
+  nullable    = false
 }
 
 variable "instance_type" {
   description = "Instance types"
-  default     = "t2.micro"
+  type        = string
+  nullable    = false
 }
 
 variable "instance_name_2" {
   description = "Instance name"
-  default     = "nginx-concurso"
+  type        = string
+  default     = "nginx-instance-tf"
+}
+
+variable "key_name" {
+  description = "Access key to instances"
+  type        = string
+  nullable    = false
 }
