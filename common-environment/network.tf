@@ -53,7 +53,7 @@ resource "aws_subnet" "public_subnet_concurso" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = var.public_subnet_name
+    Name = "${var.public_subnet_name}-${count.index + 1}"
   }
 }
 
