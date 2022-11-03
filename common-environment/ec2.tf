@@ -7,7 +7,7 @@ resource "aws_instance" "bastion_concurso" {
   subnet_id              = aws_subnet.public_subnet_concurso[0].id
   vpc_security_group_ids = [aws_security_group.concurso_public_sg.id]
   tags = {
-    Name = "bastion-concurso"
+    Name = "bastion-tf"
   }
   lifecycle {
     ignore_changes = [
