@@ -1,10 +1,10 @@
 # Security groups
 
 # Public security groups
-resource "aws_security_group" "concurso_public_sg" {
-  name        = "concurso-public-sg"
-  description = "Allow SSH inbound traffic"
-  vpc_id      = aws_vpc.vpc_concurso.id
+resource "aws_security_group" "public_sg" {
+  name        = "public-sg-tf"
+  description = "Allow SSH and HTTP traffic from the Internet"
+  vpc_id      = aws_vpc.vpc_main.id
 
   ingress {
     description      = "Access SSH from Internet"
@@ -33,19 +33,19 @@ resource "aws_security_group" "concurso_public_sg" {
   }
 
   tags = {
-    Name = "concurso-public-sg"
+    Name = "public-sg-tf"
   }
 }
 
-resource "aws_security_group" "concurso_private_sg" {
-  name        = "concurso-private-sg"
-  description = "Allow SSH outbound traffic"
-  vpc_id      = aws_vpc.vpc_concurso.id
+resource "aws_security_group" "private_sg" {
+  name        = "private-sg-tf"
+  description = "Allow SSH and HTTP traffic from the public subnets"
+  vpc_id      = aws_vpc.vpc_main.id
 
   dynamic "ingress" {
-    for_each = aws_subnet.public_subnet_concurso
+    for_each = aws_subnet.public_subnet
     content {
-      description = "Access SSH from Internet"
+      description = "Access SSH from public subnets"
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
@@ -54,9 +54,9 @@ resource "aws_security_group" "concurso_private_sg" {
   }
 
   dynamic "ingress" {
-    for_each = aws_subnet.public_subnet_concurso
+    for_each = aws_subnet.public_subnet
     content {
-      description = "Access SSH from Internet"
+      description = "Access HTTP from the public subnets"
       from_port   = 80
       to_port     = 80
       protocol    = "tcp"
@@ -72,6 +72,6 @@ resource "aws_security_group" "concurso_private_sg" {
   }
 
   tags = {
-    Name = "concurso-private-sg"
+    Name = "private-sg-tf"
   }
 }
