@@ -1,4 +1,3 @@
-# Public security groups
 resource "aws_security_group" "public_sg" {
   name        = "public-sg-tf"
   description = "Allow SSH and HTTP traffic from the Internet"

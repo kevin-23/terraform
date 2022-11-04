@@ -1,4 +1,3 @@
-# Local values
 locals {
   default_tags = {
     createdBy = "kevin"
@@ -7,7 +6,6 @@ locals {
   }
 }
 
-# Creates EC2 instances
 resource "aws_instance" "bastion" {
   count                  = 1
   ami                    = var.instance_ami

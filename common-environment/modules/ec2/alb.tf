@@ -1,4 +1,3 @@
-# Application Load Balancer
 resource "aws_lb" "alb" {
   name               = "alb-nginx-tf"
   internal           = false
