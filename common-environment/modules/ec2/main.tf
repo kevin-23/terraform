@@ -13,7 +13,7 @@ resource "aws_instance" "bastion" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
   key_name               = var.key_name
-  subnet_id              = aws_subnet.public_subnet[0].id
+  subnet_id              = var.public_subnet[0].id
   vpc_security_group_ids = [aws_security_group.public_sg.id]
   tags = merge(
     local.default_tags,
@@ -33,7 +33,7 @@ resource "aws_instance" "private_nginx" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
   key_name               = var.key_name
-  subnet_id              = aws_subnet.private_subnet.id
+  subnet_id              = var.private_subnet
   vpc_security_group_ids = [aws_security_group.private_sg.id]
   tags = merge(
     local.default_tags,

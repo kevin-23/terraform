@@ -1,6 +1,4 @@
-# Creates the AWS network components
-
-# VPC and its components
+# VPC
 resource "aws_vpc" "vpc_main" {
   cidr_block       = "10.3.0.0/16"
   instance_tenancy = "default"
@@ -30,7 +28,7 @@ resource "aws_default_route_table" "main_route_table" {
   }
 }
 
-# Public subents and its components
+# Public subents
 resource "aws_eip" "eip_nat" {
   vpc = true
 }
@@ -90,44 +88,4 @@ resource "aws_subnet" "private_subnet" {
 resource "aws_route_table_association" "private_rt_association" {
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.private_rt.id
-}
-
-# Application Load Balancer
-resource "aws_lb_target_group" "tg_nginx" {
-  name     = "tg-nginx-tf"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = aws_vpc.vpc_main.id
-}
-
-resource "aws_lb_target_group_attachment" "tg_attachtment" {
-  count            = length(aws_instance.private_nginx)
-  target_group_arn = aws_lb_target_group.tg_nginx.arn
-  target_id        = aws_instance.private_nginx[count.index].id
-  port             = 80
-}
-
-resource "aws_lb" "alb" {
-  name               = "alb-nginx-tf"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.public_sg.id]
-  subnets            = [for subnet in aws_subnet.public_subnet : subnet.id]
-
-  enable_deletion_protection = false
-
-  tags = {
-    Name = "alb-nginx-tf"
-  }
-}
-
-resource "aws_lb_listener" "alb_listener" {
-  load_balancer_arn = aws_lb.alb.arn
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.tg_nginx.arn
-  }
 }

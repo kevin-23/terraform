@@ -1,10 +1,8 @@
-# Security groups
-
 # Public security groups
 resource "aws_security_group" "public_sg" {
   name        = "public-sg-tf"
   description = "Allow SSH and HTTP traffic from the Internet"
-  vpc_id      = aws_vpc.vpc_main.id
+  vpc_id      = var.vpcid
 
   ingress {
     description      = "Access SSH from Internet"
@@ -40,10 +38,10 @@ resource "aws_security_group" "public_sg" {
 resource "aws_security_group" "private_sg" {
   name        = "private-sg-tf"
   description = "Allow SSH and HTTP traffic from the public subnets"
-  vpc_id      = aws_vpc.vpc_main.id
+  vpc_id      = var.vpcid
 
   dynamic "ingress" {
-    for_each = aws_subnet.public_subnet
+    for_each = var.public_subnet
     content {
       description = "Access SSH from public subnets"
       from_port   = 22
@@ -54,7 +52,7 @@ resource "aws_security_group" "private_sg" {
   }
 
   dynamic "ingress" {
-    for_each = aws_subnet.public_subnet
+    for_each = var.public_subnet
     content {
       description = "Access HTTP from the public subnets"
       from_port   = 80
