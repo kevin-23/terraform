@@ -1,4 +1,4 @@
-resource "aws_security_group" "public_sg" {
+resource "aws_security_group" "public" {
   name        = "public-sg-tf"
   description = "Allow SSH and HTTP traffic from the Internet"
   vpc_id      = var.vpcid
@@ -34,7 +34,7 @@ resource "aws_security_group" "public_sg" {
   }
 }
 
-resource "aws_security_group" "private_sg" {
+resource "aws_security_group" "private" {
   name        = "private-sg-tf"
   description = "Allow SSH and HTTP traffic from the public subnets"
   vpc_id      = var.vpcid

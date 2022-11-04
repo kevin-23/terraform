@@ -2,7 +2,7 @@ resource "aws_lb" "alb" {
   name               = "alb-nginx-tf"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.public_sg.id]
+  security_groups    = [aws_security_group.public.id]
   subnets            = [for subnet in var.public_subnet : subnet.id]
 
   enable_deletion_protection = false
@@ -19,14 +19,14 @@ resource "aws_lb_target_group" "tg_nginx" {
   vpc_id   = var.vpcid
 }
 
-resource "aws_lb_target_group_attachment" "tg_attachtment" {
+resource "aws_lb_target_group_attachment" "tg_association" {
   count            = length(aws_instance.private_nginx)
   target_group_arn = aws_lb_target_group.tg_nginx.arn
   target_id        = aws_instance.private_nginx[count.index].id
   port             = 80
 }
 
-resource "aws_lb_listener" "alb_listener" {
+resource "aws_lb_listener" "http_80" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"

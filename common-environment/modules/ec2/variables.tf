@@ -13,7 +13,7 @@ variable "public_subnet" {
 
 variable "private_subnet" {
   description = "Private subnet id from network module"
-  type        = string
+  type        = list(any)
   nullable    = false
 }
 
