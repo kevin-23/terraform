@@ -1,3 +1,2 @@
 <h1>Creates a common scenario on AWS</h1>
-<p>This code creates a VPC with public and private subnets, an IGW and nat gateways</p>
-<p>Also creates two EC2 instances with ALB.</p>
+<p>This code deploy a common scenarion on AWS using Terraform</p>
