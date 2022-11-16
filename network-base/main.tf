@@ -1,5 +1,5 @@
 # Configure the AWS Provider
-# Keys and region are environment variables
+# Keys are environment variables
 provider "aws" {
   region = "us-east-1"
 
