@@ -5,3 +5,11 @@ resource "aws_vpc" "main" {
     Name = var.vpc_name
   }
 }
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "igw-test-tf"
+  }
+}
