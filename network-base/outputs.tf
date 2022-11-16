@@ -1,3 +1,6 @@
+###########################
+### MODULE OUTPUTS ###
+###########################
 output "vpc_id" {
   description = "Displays the VPC id"
   value       = module.vpc.id
