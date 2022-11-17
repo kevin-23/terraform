@@ -36,4 +36,7 @@ resource "aws_eip" "nat_eip" {
   tags = {
     Name = "nat-test-tf"
   }
+  depends_on = [
+    var.vpc_id
+  ]
 }
