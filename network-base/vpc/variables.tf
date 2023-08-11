@@ -1,9 +1,6 @@
-###########################
-### VPC VARIABLES ###
-###########################
 variable "vpc_name" {
   description = "Defines the VPC name"
-  default     = "vpc-test-tf"
+  default     = "production"
 }
 
 variable "vpc_cird" {
