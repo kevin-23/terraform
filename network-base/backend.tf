@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "mybucket"
-    key    = "path/to/my/key"
+    bucket = "k3v-terraform-states"
+    key    = "network/base"
     region = "us-east-1"
   }
 }
