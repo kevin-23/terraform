@@ -1,0 +1,1 @@
+# Creates a simple EC2 instance
